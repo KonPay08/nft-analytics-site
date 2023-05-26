@@ -1,16 +1,5 @@
 import mongoose, { Document, Model, Schema, models } from 'mongoose';
-
-export interface NFTCollectionType {
-  contractAddress: string;
-  name: string;
-  description?: string;
-  imageUrl: string;
-  totalVolume: number;
-  totalSupply: number;
-  owners: number;
-  floorPrice?: number;
-  slug: string;
-}
+import { NFTCollectionType } from 'src/shared/NFTCollection.type';
 
 export interface INFTCollection extends Document, NFTCollectionType {}
 

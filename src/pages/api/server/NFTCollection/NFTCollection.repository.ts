@@ -1,8 +1,5 @@
-import { INFTCollection, NFTCollection, NFTCollectionType } from "src/server/NFTCollection/NFTCollection.models";
-
-export type SortOrder = 'asc' | 'desc';
-type OmitType = "contractAddress" | "name" | "description" | "imageUrl" | "slug"
-export type SortableFields = keyof Omit<NFTCollectionType, OmitType>
+import { INFTCollection, NFTCollection } from "src/pages/api/server/NFTCollection/NFTCollection.models";
+import { NFTCollectionType, SortOrder, SortableFields } from "src/shared/NFTCollection.type";
 
 export class NFTCollectionRepository {
   static async FindAll(): Promise<INFTCollection[]> {

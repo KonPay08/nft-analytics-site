@@ -1,10 +1,10 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { INFTCollection } from "src/server/NFTCollection/NFTCollection.models"
+import { NFTCollectionType } from "src/shared/NFTCollection.type"
 
 type CardViewProps = {
-  collections: INFTCollection[]
+  collections: NFTCollectionType[]
 }
 
 export const CardView: React.FC<CardViewProps> = ({ collections }) => {
