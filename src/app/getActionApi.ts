@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { ApiPath, ApiReqBodies, ApiResBodies } from 'src/pages/Actions';
+import { ApiPath, ApiReqBodies, ApiResBodies } from 'src/shared/apiTypes';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function createAxiosInstance() {
   const config: AxiosRequestConfig = { baseURL: API_URL }

@@ -1,8 +1,8 @@
 import { PathReporter } from 'io-ts/PathReporter';
 import { isRight } from 'fp-ts/lib/Either';
-import { OpenSea } from 'src/server/OpenSea';
-import { NFTCollectionRepository } from 'src/server/NFTCollection/NFTCollection.repository';
+import { NFTCollectionRepository } from 'src/pages/api/server/NFTCollection/NFTCollection.repository';
 import * as t from 'io-ts';
+import { OpenSea } from 'src/pages/api/server/OpenSea';
 
 export const NFTCollectionStatsType = t.exact(t.type({
   total_volume: t.number,

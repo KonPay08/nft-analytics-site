@@ -2,10 +2,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
-import { INFTCollection } from "src/server/NFTCollection/NFTCollection.models"
+import { NFTCollectionType } from "src/shared/NFTCollection.type"
 
 type ListViewProps = {
-  collections: INFTCollection[]
+  collections: NFTCollectionType[]
 }
 
 export const ListView: React.FC<ListViewProps> = ({ collections }) => {

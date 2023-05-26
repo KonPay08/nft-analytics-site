@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from 'src/server/dbConnect';
-import { Actions, ApiPath } from 'src/pages/Actions';
-import { discordNotifier } from 'src/server/discordNotifier';
-import { NFTCollectionPath } from 'src/server/NFTCollection/NFTCollection.action';
+import { Actions } from 'src/pages/api/server/Actions';
+import { connectToDatabase } from 'src/pages/api/server/dbConnect';
+import { discordNotifier } from 'src/pages/api/server/discordNotifier';
+import { NFTCollectionPath } from 'src/shared/NFTCollection.type';
+import { ApiPath } from "src/shared/apiTypes"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { action } = req.query;

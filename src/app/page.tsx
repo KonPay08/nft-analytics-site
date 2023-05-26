@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import { useEffect, useState } from "react"
-import { NFTCollectionPath } from "src/server/NFTCollection/NFTCollection.action"
-import { INFTCollection } from "src/server/NFTCollection/NFTCollection.models"
-import { SortableFields } from "src/server/NFTCollection/NFTCollection.repository"
 import { getActionApi } from "src/app/getActionApi"
 import { ListView } from "src/app/ListView"
 import { CardView } from "src/app/CardView"
+import { NFTCollectionPath, NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
 
-export default function Dashboard() {
+export default function Home() {
   const { postRequest } = getActionApi();
-  const [collections, setCollections] = useState<INFTCollection[]>([])
+  const [collections, setCollections] = useState<NFTCollectionType[]>([])
   const [sortedField, setSortedField] = useState<SortableFields>("floorPrice");
   const [view, setView] = useState<"list" | "card">("list");
   const [page, setPage] = useState(1);
@@ -30,7 +28,7 @@ export default function Dashboard() {
         pageSize: 10
       }
     )
-    if(!result.success) return
+    if(!result.success) return console.log(result.success);
     return setCollections(prev => [...prev, ...result.data]);
   };
 
