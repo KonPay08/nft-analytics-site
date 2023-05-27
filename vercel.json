@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/update-nftcollections",
+      "schedule": "0 15 * * *"
+    },
+    {
+      "path": "/api/update-nftcollections",
+      "schedule": "0 3 * * *"
+    }
+  ]
+}
