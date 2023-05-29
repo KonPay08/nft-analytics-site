@@ -32,7 +32,7 @@ export const ListView: React.FC<ListViewProps> = ({ collections }) => {
       </div>
       {collections &&
         collections.map((collection) => (
-          <Link key={collection.contractAddress} href={`/collections/${collection.slug}`}>
+          <Link key={collection.contractAddress} href={`/${collection.slug}`}>
             <div className="block p-4 flex items-center justify-between space-x-12 hover:bg-gray-100">
               <div className="flex items-center">
                 <div className="w-16 h-16 relative mr-4">
