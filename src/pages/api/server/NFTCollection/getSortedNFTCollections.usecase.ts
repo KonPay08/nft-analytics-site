@@ -5,7 +5,6 @@ export async function getSortedNFTCollectionsUsecase(field: SortableFields = "fl
   const skip = (page - 1) * pageSize;
   const collections = await NFTCollectionRepository.FindAllSorted(field, order, skip, pageSize);
   
-  // Map the collections to NFTCollectionType
   const mappedCollections = collections.map((collection) => ({
     contractAddress: collection.contractAddress,
     name: collection.name,
@@ -16,6 +15,7 @@ export async function getSortedNFTCollectionsUsecase(field: SortableFields = "fl
     owners: collection.owners,
     floorPrice: collection.floorPrice,
     slug: collection.slug,
+    updatedAt: collection.updatedAt,
   }));
 
   return mappedCollections;
