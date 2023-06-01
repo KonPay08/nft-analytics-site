@@ -5,6 +5,7 @@ import { getActionApi } from "src/app/getActionApi"
 import { ListView } from "src/app/ListView"
 import { CardView } from "src/app/CardView"
 import { NFTCollectionPath, NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
+import moment from 'moment'; 
 
 type ViewProps = {
   initialCollections: NFTCollectionType[]
@@ -17,6 +18,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
   const [view, setView] = useState<"list" | "card">("list");
   const [page, setPage] = useState(1);
   const [isFetchTrigger, setIsFetchTrigger] = useState(false);
+  const lastUpdatedAt = collections.length ? collections[0].updatedAt : null;
   const loadMore = () => {
     setIsFetchTrigger(true)
     setPage(prev => prev + 1);
@@ -48,6 +50,11 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
 
   return (
     <div className="container mx-auto py-8">
+      {lastUpdatedAt && (
+        <div className="text-sm text-gray-500 mb-4">
+          最終更新日: {moment(lastUpdatedAt).format('YYYY/MM/DD HH:mm')}
+        </div>
+      )}
       <div className="flex items-center mb-4">
         <label className="mr-2">ソート:</label>
         <select

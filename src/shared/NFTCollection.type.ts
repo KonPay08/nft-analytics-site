@@ -12,6 +12,7 @@ export interface NFTCollectionType {
   owners: number;
   floorPrice?: number;
   slug: string;
+  updatedAt?: Date;
 }
 
 export enum NFTCollectionPath {
