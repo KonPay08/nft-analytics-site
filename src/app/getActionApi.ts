@@ -13,7 +13,7 @@ export function getActionApi() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body),
-        next: { revalidate: 60 }
+        next: { revalidate: 0 }
       });
       
       if (!response.ok) {
@@ -26,7 +26,7 @@ export function getActionApi() {
     },
     getRequest: async <T extends ApiPath>(path: T): Promise<ApiResBodies[T]> => {
       const response = await fetch(`${API_URL}/${path}`, {
-        next: { revalidate: 60 }
+        next: { revalidate: 0 }
       });
       
       if (!response.ok) {
