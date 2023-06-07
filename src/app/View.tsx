@@ -5,7 +5,7 @@ import { getActionApi } from "src/app/getActionApi"
 import { ListView } from "src/app/ListView"
 import { CardView } from "src/app/CardView"
 import { NFTCollectionPath, NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
-import moment from 'moment'; 
+import moment from 'moment'
 
 type ViewProps = {
   initialCollections: NFTCollectionType[]
@@ -18,7 +18,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
   const [view, setView] = useState<"list" | "card">("list");
   const [page, setPage] = useState(1);
   const [isFetchTrigger, setIsFetchTrigger] = useState(false);
-  const lastUpdatedAt = collections.length ? collections[0].updatedAt : null;
+  const lastUpdatedAt = collections.length ? moment(collections[0].updatedAt).format('YYYY/MM/DD HH:mm') : null;
   const loadMore = () => {
     setIsFetchTrigger(true)
     setPage(prev => prev + 1);
@@ -28,8 +28,8 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
     setSortedField(field);
     setPage(1);
     setCollections([]);
+    
   };
-
   const fetchCollections = async () => {
     if(page === 1 && !isFetchTrigger) return;
     const result = await postRequest<NFTCollectionPath.GET_SORTED_NFT_COLLECTIONS>(
@@ -50,11 +50,9 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
 
   return (
     <div className="container mx-auto py-8">
-      {lastUpdatedAt && (
-        <div className="text-sm text-gray-500 mb-4">
-          最終更新日: {moment(lastUpdatedAt).format('YYYY/MM/DD HH:mm')}
-        </div>
-      )}
+      <div className="text-sm text-gray-500 mb-4">
+        最終更新日: {lastUpdatedAt ? lastUpdatedAt : "Loading..."}
+      </div>
       <div className="flex items-center mb-4">
         <label className="mr-2">ソート:</label>
         <select
@@ -81,9 +79,12 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
           カード表示
         </button>
       </div>
-      {view === "list" ? <ListView collections={collections} /> : <CardView collections={collections} />}
+      {collections.length
+        ? view === "list" ? <ListView collections={collections} /> : <CardView collections={collections} />
+        : <Loading />
+      }
       <button 
-        onClick={loadMore} 
+        onClick={loadMore}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded mx-auto block"
         style={{ display: collections?.length >= 10 ? 'block' : 'none' }}
       >
@@ -91,4 +92,13 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
       </button>
     </div>
   )
+}
+
+function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center space-y-4 min-h-[50vh]">
+      <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-36 w-36"></div>
+      <p className="text-xl">読み込み中...</p>
+    </div>
+  );
 }

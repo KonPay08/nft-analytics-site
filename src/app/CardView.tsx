@@ -12,7 +12,7 @@ export const CardView: React.FC<CardViewProps> = ({ collections }) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {collections && collections.map((collection) => (
         <div key={collection.contractAddress} className="bg-white p-4 shadow rounded flex flex-col justify-between">
-          <Link href={`/collections/${collection.slug}`}>
+          <Link href={`/${collection.slug}`}>
             <div className="w-full h-68 mb-2 rounded overflow-hidden">
               <Image
                 src={collection.imageUrl}
