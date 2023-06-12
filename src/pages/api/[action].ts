@@ -7,7 +7,7 @@ import { ApiPath } from "src/shared/apiTypes"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { action } = req.query;
-
+  await delay(10000);
   try {
     await connectToDatabase();
   } catch (error) {
@@ -29,17 +29,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     await actionHandler(req, res);
+    if(action === NFTCollectionPath.UPDATE_NFT_COLLECTIONS) {
+      try {
+        await discordNotifier(`🚀Success: ${action}`);
+      } catch (error) {
+        await discordNotifier(`😭Error in discordNotifier (success notification): ${error}`);
+      }
+    }
   } catch (error) {
     await discordNotifier(`😭Error in actionHandler: ${error}`);
     return res.status(500).json({ error: 'An error occurred when handling the action' });
   }
-
-  if(action === NFTCollectionPath.UPDATE_NFT_COLLECTIONS) {
-    try {
-      await discordNotifier(`🚀Success: ${action}`);
-    } catch (error) {
-      await discordNotifier(`😭Error in discordNotifier (success notification): ${error}`);
-    }
-  }
 }
 
+function delay(t: number) {
+  if(process.env.COLD_START === "true") {
+    console.log("Simulating cold start with delay...")
+    return new Promise((resolve) => setTimeout(resolve, t));
+  }
+}
