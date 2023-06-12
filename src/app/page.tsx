@@ -2,6 +2,8 @@ import { getActionApi } from "src/app/getActionApi"
 import { NFTCollectionPath } from "src/shared/NFTCollection.type"
 import { View } from "src/app/View"
 
+export const runtime = 'edge'
+
 export default async function Page() {
   const initialCollections = await fetchCollections();
   return <View initialCollections={initialCollections} />
