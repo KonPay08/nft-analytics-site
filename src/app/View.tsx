@@ -5,6 +5,7 @@ import { getActionApi } from "src/app/getActionApi"
 import { ListView } from "src/app/ListView"
 import { CardView } from "src/app/CardView"
 import { NFTCollectionPath, NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
+import { LoadingScreen } from "src/app/LoadingScreen"
 import moment from 'moment'
 
 type ViewProps = {
@@ -81,7 +82,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
       </div>
       {collections.length
         ? view === "list" ? <ListView collections={collections} /> : <CardView collections={collections} />
-        : <Loading />
+        : <LoadingScreen />
       }
       <button 
         onClick={loadMore}
@@ -92,13 +93,4 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
       </button>
     </div>
   )
-}
-
-function Loading() {
-  return (
-    <div className="flex flex-col items-center justify-center space-y-4 min-h-[50vh]">
-      <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-36 w-36"></div>
-      <p className="text-xl">読み込み中...</p>
-    </div>
-  );
 }

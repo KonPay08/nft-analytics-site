@@ -4,9 +4,7 @@ import { View } from "src/app/View"
 
 export default async function Page() {
   const initialCollections = await fetchCollections();
-  return (
-    <View initialCollections={initialCollections} />
-  )
+  return <View initialCollections={initialCollections} />
 }
 
 async function fetchCollections() {
