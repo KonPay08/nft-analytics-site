@@ -1,24 +1,23 @@
 "use client"
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
-import { getActionApi } from "src/app/getActionApi"
+import moment from 'moment'
+import { useState } from "react"
 import { ListView } from "src/app/ListView"
 import { CardView } from "src/app/CardView"
-import { NFTCollectionPath, NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
+import { NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
 import { LoadingScreen } from "src/app/LoadingScreen"
-import moment from 'moment'
+import { useFetchCollections } from "src/app/useFetchCollections"
 
 type ViewProps = {
   initialCollections: NFTCollectionType[]
 }
 
 export const View: React.FC<ViewProps> = ({ initialCollections }) => {
-  const { postRequest } = getActionApi();
-  const [collections, setCollections] = useState<NFTCollectionType[]>(initialCollections);
   const [sortedField, setSortedField] = useState<SortableFields>("floorPrice");
   const [view, setView] = useState<"list" | "card">("list");
   const [page, setPage] = useState(1);
   const [isFetchTrigger, setIsFetchTrigger] = useState(false);
+  const { collections, setCollections } = useFetchCollections(sortedField, page, initialCollections, isFetchTrigger);
   const lastUpdatedAt = collections.length ? moment(collections[0].updatedAt).format('YYYY/MM/DD HH:mm') : null;
   const loadMore = () => {
     setIsFetchTrigger(true)
@@ -29,25 +28,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
     setSortedField(field);
     setPage(1);
     setCollections([]);
-    
   };
-  const fetchCollections = async () => {
-    if(page === 1 && !isFetchTrigger) return;
-    const result = await postRequest<NFTCollectionPath.GET_SORTED_NFT_COLLECTIONS>(
-      NFTCollectionPath.GET_SORTED_NFT_COLLECTIONS, {
-        field: sortedField,
-        order: "desc",
-        page: page,
-        pageSize: 10
-      }
-    )
-    if(!result.success) throw new Error("Failed to fetch collections");
-    setCollections(prev => [...prev, ...result.data]);
-  };
-
-  useEffect(() => {
-    fetchCollections();
-  }, [sortedField, page]);
 
   return (
     <div className="container mx-auto py-8">
