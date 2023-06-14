@@ -13,7 +13,7 @@ export function getActionApi() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body),
-        next: { revalidate: 0 }
+        next: { revalidate: 60 }
       });
       
       if (!response.ok) {

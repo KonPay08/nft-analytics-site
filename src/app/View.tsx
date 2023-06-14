@@ -31,11 +31,24 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
     setPage(1);
     setCollections([]);
   };
-
+  const handleRefresh = () => {
+    setIsFetchTrigger(true);
+    setCollections([]);
+    setPage(1);
+    setIsNewData(false);
+  }
   return (
     <div className="container mx-auto py-8">
       <div className="text-sm text-gray-500 mb-4">
         最終更新日: {lastUpdatedAt ? lastUpdatedAt : "Loading..."}
+        {isNewData && 
+          <button
+            onClick={handleRefresh}
+            className="p-2 rounded ml-4 hover:bg-gray-200 hover:text-gray-800"
+          >
+            最新データ取得 ♻︎
+          </button>
+        }
       </div>
       <div className="flex items-center mb-4">
         <label className="mr-2">ソート:</label>
