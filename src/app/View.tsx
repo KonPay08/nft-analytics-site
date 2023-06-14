@@ -17,7 +17,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
   const [view, setView] = useState<"list" | "card">("list");
   const [page, setPage] = useState(1);
   const [isFetchTrigger, setIsFetchTrigger] = useState(false);
-  const { collections, setCollections, error } = useFetchCollections(sortedField, page, initialCollections, isFetchTrigger);
+  const { collections, setCollections } = useFetchCollections(sortedField, page, initialCollections, isFetchTrigger);
   const lastUpdatedAt = collections.length ? moment(collections[0].updatedAt).format('YYYY/MM/DD HH:mm') : null;
   const loadMore = () => {
     setIsFetchTrigger(true)
