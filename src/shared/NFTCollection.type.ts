@@ -18,6 +18,7 @@ export interface NFTCollectionType {
 export enum NFTCollectionPath {
   GET_SORTED_NFT_COLLECTIONS = "get-sorted-nftcollections",
   UPDATE_NFT_COLLECTIONS = "update-nftcollections",
+  GET_LATEST_UPDATEDAT = "get-latest-updatedat",
 }
 
 export type NFTCollectionActionsApiReqBodies = {
@@ -28,6 +29,7 @@ export type NFTCollectionActionsApiReqBodies = {
     pageSize: number;
   },
   [NFTCollectionPath.UPDATE_NFT_COLLECTIONS]: undefined,
+  [NFTCollectionPath.GET_LATEST_UPDATEDAT]: undefined,
 };
 
 export type NFTCollectionActionsApiResBodies = {
@@ -37,5 +39,9 @@ export type NFTCollectionActionsApiResBodies = {
   },
   [NFTCollectionPath.UPDATE_NFT_COLLECTIONS]: {
     success: boolean;
+  },
+  [NFTCollectionPath.GET_LATEST_UPDATEDAT]: {
+    success: boolean;
+    updatedAt: Date | undefined; 
   }
 };

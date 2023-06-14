@@ -18,4 +18,9 @@ export class NFTCollectionRepository {
     const collection = await NFTCollection.findOneAndUpdate({ contractAddress }, data, { new: true })
     return collection;
   }
+  static async FindLatestUpdatedAt(): Promise<Date | undefined> {
+    //コレクション毎でupdatedAtに誤差があるので一番古いものを取得する。
+    const collection = await NFTCollection.findOne().sort({ updatedAt: 1 });
+    return collection?.updatedAt;
+  }
 }
