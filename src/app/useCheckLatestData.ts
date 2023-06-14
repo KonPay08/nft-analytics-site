@@ -19,7 +19,6 @@ export function useCheckLatestData(collection: NFTCollectionType[]) {
       if(!result.success) throw new Error("Failed to fetch collections");
       if(!result.updatedAt) throw new Error("Not fetch updatedAt");
       const timeDifference = moment(result.updatedAt).diff(moment(latestItem.updatedAt), 'seconds');
-      console.log(timeDifference)
       setIsNewData(timeDifference > 60);
     }
     fetchLatestData();
