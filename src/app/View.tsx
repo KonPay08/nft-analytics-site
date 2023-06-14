@@ -7,6 +7,7 @@ import { CardView } from "src/app/CardView"
 import { NFTCollectionType, SortableFields } from "src/shared/NFTCollection.type"
 import { LoadingScreen } from "src/app/LoadingScreen"
 import { useFetchCollections } from "src/app/useFetchCollections"
+import { useCheckLatestData } from 'src/app/useCheckLatestData'
 
 type ViewProps = {
   initialCollections: NFTCollectionType[]
@@ -18,6 +19,7 @@ export const View: React.FC<ViewProps> = ({ initialCollections }) => {
   const [page, setPage] = useState(1);
   const [isFetchTrigger, setIsFetchTrigger] = useState(false);
   const { collections, setCollections } = useFetchCollections(sortedField, page, initialCollections, isFetchTrigger);
+  const { isNewData, setIsNewData } = useCheckLatestData(initialCollections);
   const lastUpdatedAt = collections.length ? moment(collections[0].updatedAt).format('YYYY/MM/DD HH:mm') : null;
   const loadMore = () => {
     setIsFetchTrigger(true)

@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getLatestUpdatedAtUsecase } from 'src/pages/api/server/NFTCollection/getLatestUpdatedAt.usecase';
 import { getSortedNFTCollectionsUsecase } from 'src/pages/api/server/NFTCollection/getSortedNFTCollections.usecase';
 import { updateNFTCollectionUsecase } from 'src/pages/api/server/NFTCollection/updateNFTCollections.usecase';
 import { NFTCollectionActionsApiReqBodies, NFTCollectionActionsApiResBodies, NFTCollectionPath } from 'src/shared/NFTCollection.type';
@@ -16,7 +17,13 @@ const updateNFTCollectionsAction = async (req: NextApiRequest, res: NextApiRespo
   res.status(200).json({ success: true })
 }
 
+const getLatestUpdatedAtAction = async (req: NextApiRequest, res: NextApiResponse<NFTCollectionActionsApiResBodies[NFTCollectionPath.GET_LATEST_UPDATEDAT]>) => {
+  const updatedAt = await getLatestUpdatedAtUsecase();
+  res.status(200).json({ success: true, updatedAt })
+}
+
 export const NFTCollectionActions: Record<NFTCollectionPath, (req: NextApiRequest, res: NextApiResponse<any>) => Promise<void>> = {
   [NFTCollectionPath.GET_SORTED_NFT_COLLECTIONS]: getSortedNFTCollectionsAction,
   [NFTCollectionPath.UPDATE_NFT_COLLECTIONS]: updateNFTCollectionsAction,
+  [NFTCollectionPath.GET_LATEST_UPDATEDAT]: getLatestUpdatedAtAction,
 }
